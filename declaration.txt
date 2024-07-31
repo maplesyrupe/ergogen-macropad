@@ -1,0 +1,103 @@
+points:
+    zones:
+        mains:
+           rows:
+                    r1:
+                    r2:
+                    r3:
+                    
+           columns:
+                  c1:  
+                     rows:
+                       r2: $unset 
+                       r1: $unset
+                  c2:
+                  c3:  
+                  c4:
+                    
+           key.bind: 1
+units:
+outlines:
+  pcb_base:
+    - what: polygon
+      operation: stack
+      points:
+        - ref: mains_c1_r3
+          shift: [3.5u+2,-0.5u-2]
+        - ref: mains_c1_r3
+          shift: [3.5u+2,2.5u+2]
+        - ref: mains_c1_r3
+          shift: [-0.5u-2,2.5u+2]
+        - ref: mains_c1_r3
+          shift: [-0.5u-2,-0.5u-2]
+      fillet: 2    
+
+  holes:
+    - where: true
+      what: rectangle
+      size: 18
+  edge:
+    - where: true
+      what: rectangle
+      fillet: 2
+      size: 18
+      bound: true
+  plate:
+    - edge
+    - -holes
+  pcb_final:
+    - pcb_base
+    - -holes
+
+cases.cool:
+  - what: outline
+    name: pcb_final
+    extrude: 5
+pcbs.baron:
+  outlines:
+    - outline: pcb_base
+  footprints:
+    mx_hotswap:
+        what: mx
+        where: true
+        params:
+          keycaps: true
+          hotswap: true
+          from: "{{column_net}}"
+          to: "{{colrow}}"
+    diode:
+        what: diode
+        where: true
+        params:
+          from: "{{colrow}}"
+          to: "{{row_net}}"
+        adjust:
+           shift: [0,-5]
+    promicro:
+        what: promicro
+        params:
+          orientation: "down"
+        where:
+          ref.aggregate.parts: [mains_c2_r1,mains_c2_r2]
+          shift: [-u,0]
+    reset:
+        what: button
+        params:
+          from: GND
+          to: RST
+          side: ‘b’
+        where:
+          ref: mains_c1_r3
+          shift: [0, 0.7u]
+          rotate: -90
+    oooh_colors:
+      what: rgb
+      params:
+        side: ‘F’
+        din: undefined
+        dout: undefined 
+      where: true
+      adjust:
+          shift: [0,-0.25u]
+
+          
