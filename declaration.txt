@@ -3,18 +3,24 @@ points:
         mains:
            rows:
                     r1:
+                      row_net: P18
                     r2:
+                      row_net: P15
                     r3:
-                    
+                      row_net: P14
            columns:
                   c1:  
+                     key.column_net: P8
                      rows:
                        r2: $unset 
                        r1: $unset
-                  c2:
-                  c3:  
-                  c4:
                     
+                  c2:
+                    key.column_net: P21
+                  c3:  
+                    key.column_net: P20
+                  c4:
+                    key.column_net: P19
            key.bind: 1
 units:
 outlines:
@@ -72,14 +78,17 @@ pcbs.baron:
           from: "{{colrow}}"
           to: "{{row_net}}"
         adjust:
-           shift: [0,-5]
+           shift: [-4,7]
     promicro:
         what: promicro
-        params:
-          orientation: "down"
+        params:   
+         
+          orientation: 'up'
+
         where:
           ref.aggregate.parts: [mains_c2_r1,mains_c2_r2]
-          shift: [-u,0]
+          shift: [-u-1.5,22]
+          rotate: -90
     reset:
         what: button
         params:
@@ -93,11 +102,11 @@ pcbs.baron:
     oooh_colors:
       what: rgb
       params:
-        side: ‘F’
-        din: undefined
-        dout: undefined 
+        designator: 'LED'
+        side: 'b'
+        din: P9
+        dout: undefined
       where: true
       adjust:
-          shift: [0,-0.25u]
+          shift: [0,-0.3u]
 
-          
