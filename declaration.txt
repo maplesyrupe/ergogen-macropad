@@ -1,3 +1,9 @@
+meta:
+  engine: 4.0.4
+  name: "JBP ergogen macropad"
+  date: "8/1/2024"
+  author: 'Maplesyrupe'
+  url: https://github.com/maplesyrupe/ergogen-macropad/tree/main
 points:
     zones:
         mains:
@@ -9,11 +15,7 @@ points:
                     r3:
                       row_net: P14
            columns:
-                  c1:  
-                     key.column_net: P8
-                     rows:
-                       r2: $unset 
-                       r1: $unset
+               
                     
                   c2:
                     key.column_net: P21
@@ -28,14 +30,14 @@ outlines:
     - what: polygon
       operation: stack
       points:
-        - ref: mains_c1_r3
-          shift: [3.5u+2,-0.5u-2]
-        - ref: mains_c1_r3
-          shift: [3.5u+2,2.5u+2]
-        - ref: mains_c1_r3
-          shift: [-0.5u-2,2.5u+2]
-        - ref: mains_c1_r3
-          shift: [-0.5u-2,-0.5u-2]
+        - ref: mains_c2_r3
+          shift: [2.5u+2,-2.5u-2]
+        - ref: mains_c2_r3
+          shift: [2.5u+2,0.5u+2]
+        - ref: mains_c2_r3
+          shift: [-1.5u-2,0.5u+2]
+        - ref: mains_c2_r3
+          shift: [-1.5u-2,-2.5u-2]
       fillet: 2    
 
   holes:
@@ -78,7 +80,7 @@ pcbs.baron:
           from: "{{colrow}}"
           to: "{{row_net}}"
         adjust:
-           shift: [-4,7]
+           shift: [-4,8]
     promicro:
         what: promicro
         params:   
@@ -96,11 +98,11 @@ pcbs.baron:
           to: RST
           side: ‘b’
         where:
-          ref: mains_c1_r3
-          shift: [0, 0.7u]
+          ref: mains_c2_r2
+          shift: [-u, -1.5u]
           rotate: -90
     oooh_colors:
-      what: rgb
+      what: rgb #WS2812B 
       params:
         designator: 'LED'
         side: 'b'
@@ -109,4 +111,15 @@ pcbs.baron:
       where: true
       adjust:
           shift: [0,-0.3u]
-
+    rotary_encoder:
+      what: rotary #ec11
+      where:
+         ref: mains_c2_r3
+         shift: [-u,-2u]
+         rotate: -90
+      params:
+        from: P7 
+        to: GND
+        A: P6
+        B: GND
+        C: P5
